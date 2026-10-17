@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پرونده مخفی زهرا 💙</title>
+<style>
+:root{
+  --bg:#f5f7ff;
+  --blue:#6689ff;
+  --dark:#243052;
+  --pink:#ff82b2;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh;
+  font-family:Tahoma,Arial,sans-serif;
+  background:linear-gradient(145deg,#f5f7ff,#eaf0ff,#fff0f6);
+  color:var(--dark); overflow-x:hidden;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{
+  width:min(92%,490px); margin:30px auto;
+  position:relative; z-index:1;
+}
+.top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:20px;font-size:13px;color:#687596;
+}
+.sound{
+  border:1px solid #dce3ff;background:#fff;
+  border-radius:30px;padding:9px 13px;color:#5268bd;
+}
+.card{
+  background:#ffffffd9;backdrop-filter:blur(14px);
+  border:1px solid #fff;border-radius:28px;
+  padding:25px 20px;box-shadow:0 15px 45px #536aa41c;
+  text-align:center;overflow:hidden;
+}
+.logo{
+  width:76px;height:76px;border-radius:25px;
+  display:grid;place-items:center;font-size:37px;
+  background:linear-gradient(135deg,#e3eaff,#ffe4f0);
+  margin:0 auto 16px;animation:bob 3s ease-in-out infinite;
+}
+h1{font-size:24px;margin:8px 0 12px}
+p{line-height:2;color:#75809b;font-size:14px}
+.progress{height:6px;background:#edf0fb;border-radius:10px;margin:22px 0}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#8eabff,#ff9fc9);
+border-radius:10px;transition:width .45s ease}
+.qnum{font-size:12px;color:#8b96b1;margin:12px}
+.question{font-size:21px;line-height:1.9;margin:15px 0 22px}
+.answers{display:grid;gap:10px}
+.answer{
+  width:100%;padding:14px;border:1px solid #e5e9f8;
+  background:#fff;border-radius:16px;color:#34405f;
+  transition:transform .2s,border-color .2s,background .2s;
+}
+.answer:hover{transform:translateY(-2px);border-color:#9aafff;background:#f8f9ff}
+.answer:active{transform:scale(.98)}
+.answer.selected{background:#edf1ff;border-color:#829dff}
+.primary{
+  width:100%;border:0;border-radius:16px;padding:15px;
+  color:white;font-weight:bold;
+  background:linear-gradient(110deg,#718dff,#9c8cff);
+  box-shadow:0 7px 18px #8499ef33;
+  margin-top:17px;transition:transform .2s,filter .2s;
+}
+.primary:hover{transform:translateY(-2px);filter:brightness(1.04)}
+.primary:disabled{opacity:.45;cursor:not-allowed}
+.reaction{
+  min-height:65px;background:#f7f8ff;border-radius:16px;
+  margin-top:15px;padding:12px;font-size:13px;line-height:1.9;
+  animation:fade .35s ease;
+}
+.field{
+  width:100%;padding:13px;border:1px solid #e1e6f6;
+  border-radius:13px;background:#fff;outline:none;margin:5px 0;
+}
+.field:focus{border-color:#8da5ff}
+.emoji{font-size:30px;display:block;margin-bottom:8px}
+.hidden{display:none!important}
+.foot{text-align:center;font-size:11px;color:#a0a8bc;margin:18px}
+.float{
+  position:fixed;pointer-events:none;z-index:0;
+  animation:floatUp 2.2s ease-out forwards;
+}
+.result-title{font-size:25px;margin:8px 0}
+.result-box{
+  text-align:right;background:#f8f9ff;border-radius:18px;
+  padding:15px;margin:18px 0;line-height:2;font-size:14px;
+  white-space:pre-wrap;overflow-wrap:anywhere;
+}
+@keyframes bob{50%{transform:translateY(-6px) rotate(3deg)}}
+@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes floatUp{0%{opacity:0;transform:translateY(10px) scale(.5)}
+20%{opacity:1}100%{opacity:0;transform:translateY(-150px) rotate(25deg) scale(1.4)}}
+</style>
+</head>
+<body>
+<main class="app">
+  <div class="top">
+    <span>🔎 پرونده شماره ۰۰۷</span>
+    <button class="sound" id="soundBtn">🔊 فعال‌سازی صدا</button>
+  </div>
+
+  <section class="card" id="intro">
+    <div class="logo">🕵🏻‍♀️</div>
+    <div style="color:#8393cb;font-size:12px">CLASSIFIED · ZAHRA EDITION</div>
+    <h1>پرونده‌ی مخفی زهرا 💙</h1>
+    <p>یه سری سؤال مهم داریم که فقط خود زهرا می‌تونه جوابشون رو بده! 😌<br>
+    آماده‌ای حقیقت‌های خطرناک رو کشف کنیم؟</p>
+    <button class="primary" id="start">باز کردن پرونده ✨</button>
+  </section>
+
+  <section class="card hidden" id="quiz">
+    <div class="logo" id="face">🤔</div>
+    <div class="qnum" id="qnum"></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <h2 class="question" id="question"></h2>
+    <div id="answers" class="answers"></div>
+    <div id="reaction" class="reaction">منتظر جواب زهرا هستیم... 👀</div>
+    <button class="primary" id="next" disabled>سؤال بعدی ←</button>
+  </section>
+
+  <section class="card hidden" id="finish">
+    <div class="logo">🎉</div>
+    <h2 class="result-title">پرونده تکمیل شد!</h2>
+    <p>گزارش اختصاصی زهرا آماده‌ست 💌</p>
+    <div class="result-box" id="report"></div>
+    <button class="primary" id="copy">📋 کپی گزارش</button>
+    <button class="answer" id="again" style="margin-top:10px">🔄 شروع دوباره</button>
+  </section>
+  <div class="foot">ساخته‌شده با کمی شیطنت و کلی انرژی مثبت 💙</div>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let soundOn = false;
+let audio;
+let index = 0;
+let answers = [];
+let chosen = null;
+
+const questions = [
+ {
+  q:"آیا حمید را دوست داری؟ 💙",
+  icon:"💌",
+  options:["آرهههه 🥹💙","یه کوچولو 😏","نه 😂"],
+  react:[
+   "عههههه! حمید الان از خوشحالی داره دور خودش می‌چرخه! 🥹💙",
+   "یه کوچولو؟ باشه فعلاً با همین یه کوچولو پیش می‌ریم 😂",
+   "🚨 هشدار! قلب حمید با موفقیت از مدار خارج شد! البته هنوز امید هست 😂"
+  ],
+  face:["🥹","😏","😭"]
+ },
+ {
+  q:"چقدر حمید رو دوست داری؟",
+  icon:"💗",
+  options:["به اندازه‌ی کل دنیا 🌍","خیلیییی زیاد 🫶","در حد تحمل کردنش 😂","اصلاً! 😈"],
+  react:[
+   "دنیا هم کم آورد! یکی بیاد این حجم از دوست داشتن رو اندازه بگیره! 🌌",
+   "حمید الان داره این جواب رو اسکرین‌شات می‌گیره 😂💗",
+   "تحمل کردن حمید خودش مدال شجاعت می‌خواد! 🏅",
+   "خب ظاهراً حمید باید بره کلاس جلب رضایت! 😭"
+  ],
+  face:["🌍","🥰","🤣","😈"]
+ },
+ {
+  q:"تایپت چیه؟ 😎",
+  icon:"✨",
+  options:["مهربون و بامزه 🧸","آروم و مرموز 🌙","شیطون و پرانرژی ⚡","همه‌شون! 😌"],
+  react:[
+   "ترکیب خطرناک مهربونی و بامزگی! 🧸",
+   "شخصیت اصلی یه فیلم مرموز! 🌙",
+   "انرژی این آدم با پاوربانک هم شارژ نمی‌شه! ⚡",
+   "یعنی یه شخصیت کامل با همه‌ی آپشن‌ها! 😂"
+  ],
+  face:["🧸","🌙","⚡","👑"]
+ },
+ {
+  q:"رنگ مورد علاقه‌ت چیه؟ 🎨",
+  icon:"🖌️",
+  options:["آبی 💙","صورتی 🩷","مشکی 🖤","بنفش 💜","سبز 💚","سفید 🤍","یه رنگ دیگه 🌈"],
+  react:[
+   "آبی یعنی آرامش و خوش‌سلیقگی! 💙",
+   "صورتی، رسماً امضای کیوت بودن! 🩷",
+   "مشکی؛ شیک و همیشه برنده! 🖤",
+   "بنفش؛ یه ذره جادو هم چاشنی زندگی! 💜",
+   "سبز؛ انرژی خوب و حس طبیعت! 💚",
+   "سفید؛ ساده، شیک و تمیز! 🤍",
+   "خب حالا باید اسم اون رنگ خاص رو هم بدونیم! 🌈"
+  ],
+  face:["💙","🩷","🖤","💜","💚","🤍","🎨"],
+  custom:true
+ },
+ {
+  q:"غذای مورد علاقه‌ت چیه؟ 🍕",
+  icon:"🍽️",
+  options:["پیتزا 🍕","برگر 🍔","قرمه‌سبزی 🍲","جوجه‌کباب 🍗","پاستا 🍝","یه چیز دیگه 😋"],
+  react:[
+   "انتخابی که هیچ‌وقت آدم رو ناامید نمی‌کنه! 🍕",
+   "برگررر! چه کسی می‌تونه بهش نه بگه؟ 🍔",
+   "غذای اصیل، انتخاب اصیل! 👑",
+   "بوی جوجه‌کباب اومد یا من گرسنه‌ام؟ 😂",
+   "ایتالیا به انتخابت افتخار می‌کنه! 🍝",
+   "این پرونده بدون اسم غذا بسته نمی‌شه! 😋"
+  ],
+  face:["🍕","🍔","🍲","🍗","🍝","😋"],
+  custom:true
+ },
+ {
+  q:"بهترین رفیقت کیه؟ 🫂",
+  icon:"👯",
+  options:["حمید 😎","یه رفیق دیگه 💗","خودم بهترین رفیق خودمم 😌","نمی‌گم، محرمانه‌ست 🤐"],
+  react:[
+   "عههههه! حمید رفت توی تالار افتخارات! 😂🏆",
+   "رفیق خوب واقعاً یه نعمت بزرگه 💗",
+   "خودت رو دوست داشته باش؛ اینم خیلی مهمه! 🫶",
+   "مأموریت محرمانه باقی موند! 🕵️"
+  ],
+  face:["🏆","🫂","👑","🤐"],
+  custom:true
+ },
+ {
+  q:"چه آرزویی داری؟ 🌠",
+  icon:"🌌",
+  options:["موفقیت و پول 💸","آرامش و خوشبختی 🕊️","رسیدن به یه آدم خاص 💞","سفر به جاهای قشنگ ✈️","یه آرزوی دیگه ✨"],
+  react:[
+   "امیدوارم تلاش‌هات یه روز به بهترین نتیجه برسن! 💸",
+   "آرامش واقعی از هر چیزی باارزش‌تره 🕊️",
+   "امیدوارم هرچی از ته دل می‌خوای، به بهترین شکل برات اتفاق بیفته 💞",
+   "چمدون رو ببند، فعلاً توی خیال سفر کنیم! ✈️",
+   "آرزوهات ارزش شنیده شدن دارن؛ مخصوصاً اونایی که از ته دلن ✨"
+  ],
+  face:["💸","🕊️","💞","✈️","🌠"],
+  custom:true
+ },
+ {
+  q:"از ۱ تا ۱۰ به حمید چه نمره‌ای می‌دی؟ 😏",
+  icon:"⭐",
+  options:["۱ تا ۳ 😬","۴ تا ۶ 🙂","۷ یا ۸ 😎","۹ 😌","۱۰ از ۱۰ 👑"],
+  react:[
+   "اوف! حمید باید بره تجدیدنظرخواهی! 😂",
+   "نمره‌ی قبولی گرفت، فعلاً اخراج نمی‌شه! 😭",
+   "حمید داره برای رسیدن به ۱۰ تلاش می‌کنه! 😎",
+   "یه نمره تا کمال فاصله داره! 😏",
+   "۱۰؟ این نمره باید با قاب طلا نصب بشه! 😂🏆"
+  ],
+  face:["😭","🙂","😎","😏","👑"],
+  custom:true
+ },
+ {
+  q:"از ۱ تا ۱۰ به خودت چند می‌دی؟ 👑",
+  icon:"💅",
+  options:["۱ تا ۳ 🥺","۴ تا ۶ 🙂","۷ یا ۸ 😌","۹ 😎","۱۰، چون ملکه‌ام! 👑"],
+  react:[
+   "زهرا جان، با خودت مهربون‌تر باش! 💗",
+   "هر آدمی بیشتر از یه عدده؛ خودت رو دست‌کم نگیر! 🫶",
+   "اعتمادبه‌نفس در حال افزایش... 📈",
+   "این همه جذابیت، فقط یه نمره تا ۱۰ فاصله داره! 😎",
+   "پادشاهی که نیستی، ملکه‌ای! تاج رو بیارید! 👑😂"
+  ],
+  face:["🥺","🙂","😌","😎","👑"],
+  custom:true
+ },
+ {
+  q:"حالا یه حرف مخصوص خودت برای پرونده بنویس! 💌",
+  icon:"📝",
+  options:["یه پیام برای حمید 💙","یه جمله درباره‌ی خودم ✨","یه یادگاری برای آینده 🌠"],
+  react:[
+   "این پیام قراره بخشی از پرونده‌ی ویژه‌ات بشه! 💙",
+   "ثبت شد؛ نسخه‌ی مخصوص خود زهرا! ✨",
+   "یه یادگاری کوچولو برای روزهای آینده 🌠"
+  ],
+  face:["💌","✨","🌠"],
+  input:true
+ }
+];
+
+function beep(freq=550,duration=.09,type="sine"){
+ if(!soundOn)return;
+ try{
+  audio ||= new (window.AudioContext||window.webkitAudioContext)();
+  if(audio.state==="suspended")audio.resume();
+  const o=audio.createOscillator(),g=audio.createGain();
+  o.type=type;o.frequency.value=freq;
+  g.gain.setValueAtTime(.055,audio.currentTime);
+  g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);
+  o.connect(g);g.connect(audio.destination);
+  o.start();o.stop(audio.currentTime+duration);
+ }catch(e){}
+}
+function sparkle(){
+ const symbols=["💙","✨","💗","⭐","🫧"];
+ for(let i=0;i<9;i++){
+  const el=document.createElement("span");
+  el.className="float";
+  el.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+  el.style.left=(8+Math.random()*84)+"vw";
+  el.style.top=(45+Math.random()*35)+"vh";
+  el.style.fontSize=(15+Math.random()*18)+"px";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),2300);
+ }
+}
+$("soundBtn").onclick=()=>{
+ soundOn=!soundOn;
+ $("soundBtn").textContent=soundOn?"🔊 صدا روشنه":"🔇 صدا خاموشه";
+ beep(660,.12);
+};
+$("start").onclick=()=>{
+ $("intro").classList.add("hidden");
+ $("quiz").classList.remove("hidden");
+ index=0;answers=[];render();
+ beep(660,.12);sparkle();
+};
+
+function render(){
+ chosen=null;
+ const q=questions[index];
+ $("qnum").textContent=`سؤال ${index+1} از ${questions.length}`;
+ $("bar").style.width=(index/questions.length*100)+"%";
+ $("question").textContent=q.q;
+ $("face").textContent=q.icon;
+ $("reaction").textContent="منتظر جواب زهرا هستیم... 👀";
+ $("answers").innerHTML="";
+ $("next").disabled=true;
+ $("next").textContent=index===questions.length-1?"دیدن نتیجه نهایی 🎉":"سؤال بعدی ←";
+
+ if(q.input){
+  const input=document.createElement("textarea");
+  input.className="field";input.rows=3;
+  input.maxLength=350;
+  input.placeholder="اینجا بنویس... 💌";
+  input.addEventListener("input",()=>{
+   chosen=input.value.trim()?input.value.trim():null;
+   $("next").disabled=!chosen;
+  });
+  $("answers").appendChild(input);
+  return;
+ }
+ q.options.forEach((opt,i)=>{
+  const b=document.createElement("button");
+  b.className="answer";b.textContent=opt;
+  b.onclick=()=>{
+   chosen={text:opt,idx:i};
+   answers[index]={
+    question:q.q,answer:opt,
+    reaction:q.react[i],
+    custom:""
+   };
+   if(q.custom && !q.input){
+    const old=$("answers").querySelector(".field");
+    if(old)answers[index].custom=old.value.trim();
+   }
+   $("answers").querySelectorAll("button").forEach(x=>x.classList.remove("selected"));
+   b.classList.add("selected");
+   $("face").textContent=q.face[i];
+   $("reaction").textContent=q.react[i];
+   $("next").disabled=false;
+   beep(440+i*95,.1);
+   sparkle();
+  };
+  $("answers").appendChild(b);
+ });
+ if(q.custom && !q.input){
+  const field=document.createElement("input");
+  field.className="field";field.placeholder="اگه دوست داری، توضیح بیشتری بنویس... (اختیاری)";
+  field.maxLength=250;
+  field.addEventListener("input",()=>{
+   if(answers[index])answers[index].custom=field.value.trim();
+  });
+  $("answers").appendChild(field);
+ }
+}
+$("next").onclick=()=>{
+ if(chosen===null)return;
+ const q=questions[index];
+ if(q.input){
+  answers[index]={question:q.q,answer:chosen,reaction:$("reaction").textContent,custom:chosen};
+ }
+ beep(740,.12);
+ if(index<questions.length-1){
+  index++;render();
+ }else finish();
+};
+function finish(){
+ $("quiz").classList.add("hidden");
+ $("finish").classList.remove("hidden");
+ $("bar").style.width="100%";
+ const report="💙 پرونده‌ی اختصاصی زهرا 💙\n\n"+
+ answers.map((a,i)=>`${i+1}. ${a.question}\nجواب زهرا: ${a.answer}`+
+ (a.custom && a.custom!==a.answer?`\nتوضیح: ${a.custom}`:"")+
+ `\nواکنش سایت: ${a.reaction||"ثبت شد"}\n`).join("\n")+
+ "\n✨ پایان پرونده؛ امضای زهرا!";
+ $("report").textContent=report;
+ sparkle();beep(880,.18);
+}
+$("copy").onclick=async()=>{
+ const text=$("report").textContent;
+ try{
+  await navigator.clipboard.writeText(text);
+  $("copy").textContent="✅ گزارش کپی شد!";
+ }catch(e){
+  const area=document.createElement("textarea");
+  area.value=text;document.body.appendChild(area);
+  area.select();
+  try{document.execCommand("copy");$("copy").textContent="✅ گزارش کپی شد!";}
+  catch(err){$("copy").textContent="متن را انتخاب و کپی کن";}
+  area.remove();
+ }
+};
+$("again").onclick=()=>{
+ $("finish").classList.add("hidden");
+ $("intro").classList.remove("hidden");
+ $("copy").textContent="📋 کپی گزارش";
+};
+</script>
+</body>
+</html>
